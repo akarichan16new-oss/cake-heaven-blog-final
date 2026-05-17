@@ -1,0 +1,20 @@
+# System files
+.DS_Store
+Thumbs.db
+
+# VS Code settings
+.vscode/
+
+# Logs
+*.log
+
+# Environment files
+.env
+.env.local
+
+# Node dependencies, only if added later
+node_modules/
+
+# Build folders, only if added later
+dist/
+build/

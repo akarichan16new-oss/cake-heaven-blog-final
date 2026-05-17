@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Read More | Cake Heaven Blog</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="cake story, cake blog, chocolate cake, strawberry cake, raspberry cake, lemon cake, vanilla cake, berry cake" name="keywords">
+    <meta content="Read beautiful cake stories on Cake Heaven Blog." name="description">
+
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #e91e63;
+            --primary-dark: #c2185b;
+            --dark: #1f1f2e;
+            --muted: #6c757d;
+            --shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 10px 30px rgba(233, 30, 99, 0.12);
+            --transition: all 0.35s ease;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(180deg, #fff8fb 0%, #fff 42%, #fff7fa 100%);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, .brand-text {
+            font-family: 'Playfair Display', serif;
+        }
+
+        a {
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .text-primary {
+            color: var(--primary) !important;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), #ff4f8b);
+            border: none;
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.22);
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            transform: translateY(-2px);
+        }
+
+        #spinner {
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity .5s ease-out, visibility 0s linear .5s;
+            z-index: 99999;
+            background: rgba(255, 248, 251, 0.96) !important;
+            backdrop-filter: blur(8px);
+        }
+
+        #spinner.show {
+            transition: opacity .5s ease-out, visibility 0s linear 0s;
+            visibility: visible;
+            opacity: 1;
+        }
+
+        .cake-loader {
+            position: relative;
+            width: 110px;
+            height: 110px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cake-loader-ring {
+            position: absolute;
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            border: 4px solid rgba(233, 30, 99, 0.15);
+            border-top: 4px solid #e91e63;
+            border-right: 4px solid #ff7aa8;
+            animation: cakeSpin 1.2s linear infinite;
+        }
+
+        .cake-loader-icon {
+            width: 66px;
+            height: 66px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #e91e63, #ff7aa8);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+            box-shadow: 0 10px 30px rgba(233, 30, 99, 0.28);
+            animation: cakePulse 1.6s ease-in-out infinite;
+        }
+
+        @keyframes cakeSpin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes cakePulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.08); }
+        }
+
+        .topbar {
+            background: linear-gradient(90deg, #2b1020, #3b132c);
+            color: #fff;
+            font-size: 14px;
+            padding: 10px 0;
+        }
+
+        .topbar a {
+            color: rgba(255, 255, 255, 0.88);
+        }
+
+        .topbar a:hover {
+            color: #fff;
+        }
+
+        .social-mini {
+            width: 38px;
+            height: 38px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            color: #fff;
+            border: 1px solid rgba(255,255,255,.25);
+        }
+
+        .social-mini:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .main-nav-wrapper {
+            position: sticky;
+            top: 0;
+            z-index: 1030;
+            backdrop-filter: blur(14px);
+            background: rgba(255, 255, 255, 0.82);
+            border-bottom: 1px solid rgba(233, 30, 99, 0.08);
+        }
+
+        .navbar {
+            padding: 16px 0;
+        }
+
+        .navbar-brand h1 {
+            font-size: 2rem;
+            margin: 0;
+            color: var(--primary);
+            font-weight: 800;
+        }
+
+        .nav-link {
+            color: var(--dark) !important;
+            font-weight: 600;
+            margin: 0 8px;
+            position: relative;
+        }
+
+        .nav-link.active,
+        .nav-link:hover {
+            color: var(--primary) !important;
+        }
+
+        .nav-link::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -6px;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 100%;
+        }
+
+        .search-btn,
+        .user-btn {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, var(--primary), #ff5b94);
+            color: #fff;
+            box-shadow: var(--shadow-md);
+        }
+
+        .user-btn {
+            background: #fff;
+            color: var(--primary);
+            border: 1px solid rgba(233, 30, 99, 0.15);
+        }
+
+        .modal-content {
+            border: none;
+            background: linear-gradient(135deg, #fff8fb, #fff);
+        }
+
+        .search-input {
+            min-height: 64px;
+            border-radius: 20px;
+            border: 1px solid rgba(233, 30, 99, 0.15);
+            box-shadow: var(--shadow-md);
+        }
+
+        .page-header {
+            position: relative;
+            min-height: 55vh;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg, rgba(25, 10, 18, 0.78) 0%, rgba(25, 10, 18, 0.38) 55%, rgba(25, 10, 18, 0.18) 100%),
+                url('img/homeback1.jpg') center center / cover no-repeat;
+        }
+
+        .page-header .content {
+            color: #fff;
+        }
+
+        .page-badge {
+            display: inline-block;
+            padding: 10px 18px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            backdrop-filter: blur(10px);
+            margin-bottom: 18px;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .page-header h1 {
+            font-size: clamp(2.4rem, 6vw, 4.8rem);
+            font-weight: 800;
+        }
+
+        .page-header p {
+            color: rgba(255,255,255,0.92);
+            max-width: 780px;
+        }
+
+        .content-section {
+            padding: 90px 0;
+        }
+
+        .intro-box,
+        .story-card {
+            background: rgba(255,255,255,0.94);
+            border-radius: 28px;
+            box-shadow: var(--shadow-lg);
+            border: 1px solid rgba(233, 30, 99, 0.08);
+        }
+
+        .intro-box {
+            padding: 34px;
+            margin-bottom: 30px;
+        }
+
+        .story-card {
+            overflow: hidden;
+            margin-bottom: 28px;
+        }
+
+        .story-card img {
+            width: 100%;
+            height: 320px;
+            object-fit: cover;
+        }
+
+        .story-body {
+            padding: 28px;
+        }
+
+        .story-body p {
+            color: #555;
+            line-height: 1.9;
+            margin-bottom: 16px;
+        }
+
+        .tag-pill {
+            display: inline-block;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: rgba(233, 30, 99, 0.08);
+            color: var(--primary);
+            font-size: 13px;
+            font-weight: 700;
+            margin: 0 8px 10px 0;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, rgba(233,30,99,0.08), rgba(255,182,193,0.18));
+            border-left: 4px solid var(--primary);
+            padding: 22px;
+            border-radius: 18px;
+            margin: 20px 0;
+            font-style: italic;
+            color: #444;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, #1f0c18, #2e1021 65%, #42152f);
+            color: rgba(255,255,255,0.8);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .footer::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(circle at top right, rgba(255,255,255,.08), transparent 25%);
+            pointer-events: none;
+        }
+
+        .footer h4 {
+            color: #fff;
+            margin-bottom: 22px;
+        }
+
+        .footer a {
+            color: rgba(255,255,255,0.75);
+            display: inline-block;
+            margin-bottom: 12px;
+        }
+
+        .footer a:hover {
+            color: #fff;
+            transform: translateX(4px);
+        }
+
+        .newsletter-box {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.12);
+            padding: 24px;
+            border-radius: 24px;
+            backdrop-filter: blur(10px);
+        }
+
+        .newsletter-box .form-control {
+            border: none;
+            border-radius: 999px;
+            min-height: 54px;
+        }
+
+        .footer-social a {
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.08);
+            margin-right: 10px;
+        }
+
+        .footer-social a:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: #180810;
+            color: rgba(255,255,255,0.75);
+        }
+
+        .back-to-top {
+            position: fixed;
+            right: 24px;
+            bottom: 24px;
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 99;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .reveal-up {
+            opacity: 0;
+            transform: translateY(70px);
+            transition: opacity 0.9s ease, transform 0.9s ease;
+        }
+
+        .reveal-up.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (max-width: 767px) {
+            .navbar-brand h1 {
+                font-size: 1.55rem;
+            }
+
+            .page-header {
+                min-height: 42vh;
+            }
+
+            .story-card img {
+                height: 220px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- Spinner -->
+    <div id="spinner" class="show position-fixed top-50 start-50 translate-middle w-100 vh-100 bg-white d-flex align-items-center justify-content-center">
+        <div class="cake-loader">
+            <div class="cake-loader-ring"></div>
+            <div class="cake-loader-icon">
+                <i class="fas fa-birthday-cake"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Topbar -->
+    <div class="container-fluid topbar d-none d-lg-block">
+        <div class="container">
+            <div class="row align-items-center g-3">
+                <div class="col-lg-7">
+                    <div class="d-flex flex-wrap gap-4">
+                        <a href="https://www.google.com/maps/place/Times+City+Yangon/" target="_blank">
+                            <i class="fas fa-map-marker-alt text-primary me-2"></i>Find A Location
+                        </a>
+                        <a href="tel:+951112222333">
+                            <i class="fas fa-phone-alt text-primary me-2"></i>+95 111 2222 333
+                        </a>
+                        <a href="mailto:akari16new@gmail.com">
+                            <i class="fas fa-envelope text-primary me-2"></i>akari16new@gmail.com
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-5 text-end">
+                    <a href="https://www.facebook.com" class="social-mini me-2" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://twitter.com" class="social-mini me-2" target="_blank"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com" class="social-mini me-2" target="_blank"><i class="fab fa-instagram"></i></a>
+                    <a href="https://mm.linkedin.com" class="social-mini" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <div class="main-nav-wrapper">
+        <div class="container">
+            <nav class="navbar navbar-expand-xl">
+                <a href="index.html" class="navbar-brand">
+                    <h1 class="brand-text">Cake Heaven Blog</h1>
+                </a>
+
+                <button class="navbar-toggler border-0 shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                    <span class="fa fa-bars text-primary fs-3"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarCollapse">
+                    <div class="navbar-nav mx-auto align-items-xl-center">
+                        <a href="index.html" class="nav-item nav-link">Home</a>
+                        <a href="about.html" class="nav-item nav-link">About</a>
+                        <a href="service.html" class="nav-item nav-link active">Our Post</a>
+                        <a href="contact.html" class="nav-item nav-link">Contact Us</a>
+                        <a href="sign-in.html" class="nav-item nav-link">Sign In</a>
+                        <a href="sign-up.html" class="nav-item nav-link">Sign Up</a>
+                    </div>
+
+                    <div class="d-flex align-items-center gap-2 mt-3 mt-xl-0">
+                        <button class="search-btn" data-bs-toggle="modal" data-bs-target="#searchModal">
+                            <i class="fas fa-search"></i>
+                        </button>
+                        <a href="sign-in.html" class="user-btn">
+                            <i class="bi bi-person"></i>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Search Modal -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-fullscreen">
+            <div class="modal-content rounded-0">
+                <div class="modal-header border-0 px-4 pt-4">
+                    <h4 class="modal-title fw-bold">Search by keyword</h4>
+                    <button type="button" class="btn-close shadow-none" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body d-flex align-items-center justify-content-center">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-lg-8">
+                                <div class="input-group">
+                                    <input type="search" class="form-control search-input px-4" placeholder="Search cakes, posts, reviews..." aria-label="Search">
+                                    <button class="btn btn-primary px-4 rounded-end-4">
+                                        <i class="fa fa-search me-2"></i>Search
+                                    </button>
+                                </div>
+                                <p class="text-center text-muted mt-3">Try: chocolate, strawberry, vanilla, berry</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Hero -->
+    <section class="page-header">
+        <div class="container">
+            <div class="content reveal-up">
+                <span class="page-badge">Sweet Stories</span>
+                <h1>The Story Behind Our Cakes</h1>
+                <p>
+                    Every cake has its own mood, colour, and feeling. This page tells each cake like a small story, so readers can enjoy more than just the flavour.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <section class="content-section">
+        <div class="container">
+            <div class="intro-box reveal-up">
+                <h2 class="mb-3">A Little World of Cakes</h2>
+                <p class="mb-0" style="line-height: 1.9; color:#555;">
+                    At Cake Heaven Blog, each cake is more than a dessert. Some cakes feel warm and comforting, some feel light and romantic, and some feel bright and full of celebration. We wanted this page to read like a collection of sweet little stories, where every cake has its own personality and its own moment to shine.
+                </p>
+            </div>
+
+            <!-- Chocolate Story -->
+            <div class="story-card reveal-up">
+                <img src="img/op1.jpg" alt="Chocolate Fudge Extravaganza">
+                <div class="story-body">
+                    <span class="tag-pill">Chocolate</span>
+                    <span class="tag-pill">Rich Story</span>
+                    <h3 class="mb-3">Chocolate Fudge Extravaganza</h3>
+                    <p>
+                        Chocolate Fudge Extravaganza feels like the kind of cake that enters the room quietly and still becomes the centre of attention. Its deep cocoa colour, soft sponge, and glossy chocolate finish give it a rich and confident presence.
+                    </p>
+                    <p>
+                        This cake tells a warm story. It feels like family birthdays, happy laughter, and one more slice when nobody planned to eat more. It is smooth, comforting, and full of deep flavour, so it becomes the perfect cake for chocolate lovers who want something classic but still special.
+                    </p>
+                    <div class="quote-box">
+                        “Rich, soft, and full of warmth — this is the chocolate cake that feels like a celebration by itself.”
+                    </div>
+                    <a href="post-chocolate.html" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Open Full Page</a>
+                </div>
+            </div>
+
+            <!-- Strawberry Story -->
+            <div class="story-card reveal-up">
+                <img src="img/op2.jpg" alt="Strawberry Dream Delight">
+                <div class="story-body">
+                    <span class="tag-pill">Strawberry</span>
+                    <span class="tag-pill">Romantic Story</span>
+                    <h3 class="mb-3">Strawberry Dream Delight</h3>
+                    <p>
+                        Strawberry Dream Delight feels soft from the very first look. Its pink tones, creamy layers, and fresh berry feeling make it look sweet, gentle, and full of charm.
+                    </p>
+                    <p>
+                        This cake feels like spring afternoons, fresh flowers, and elegant tea tables. It is not loud, but it is beautiful in a quiet way. The flavour is soft and fruity, and the story it tells is one of sweetness, lightness, and simple beauty.
+                    </p>
+                    <div class="quote-box">
+                        “A cake that feels gentle, lovely, and full of soft berry sweetness.”
+                    </div>
+                    <a href="post-strawberry.html" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Open Full Page</a>
+                </div>
+            </div>
+
+            <!-- Raspberry Story -->
+            <div class="story-card reveal-up">
+                <img src="img/op3.jpg" alt="Raspberry Delight Delicacy">
+                <div class="story-body">
+                    <span class="tag-pill">Raspberry</span>
+                    <span class="tag-pill">Bright Story</span>
+                    <h3 class="mb-3">Raspberry Delight Delicacy</h3>
+                    <p>
+                        Raspberry Delight Delicacy feels more lively and playful. Its bright fruit colour and refreshing flavour give it an energetic personality that stands out in the sweetest way.
+                    </p>
+                    <p>
+                        This cake feels like a joyful moment with a little sparkle. It has sweetness, but it also has freshness, which makes it feel exciting and elegant at the same time. It is a cake for people who enjoy fruit flavour with a stronger character and a brighter mood.
+                    </p>
+                    <div class="quote-box">
+                        “Fresh, colourful, and full of life — a cake with a happy and stylish spirit.”
+                    </div>
+                    <a href="post-raspberry.html" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Open Full Page</a>
+                </div>
+            </div>
+
+            <!-- Lemon Story -->
+            <div class="story-card reveal-up">
+                <img src="img/op4.jpg" alt="Lemon Zest Dream">
+                <div class="story-body">
+                    <span class="tag-pill">Lemon</span>
+                    <span class="tag-pill">Fresh Story</span>
+                    <h3 class="mb-3">Lemon Zest Dream</h3>
+                    <p>
+                        Lemon Zest Dream feels light, bright, and cheerful. It is the cake that brings freshness to the table and makes everything feel a little softer and cleaner.
+                    </p>
+                    <p>
+                        Its story is simple but memorable. It feels like sunshine, quiet mornings, and fresh air. The citrus flavour gives it a clean finish, so it is ideal for readers who enjoy desserts that feel gentle, elegant, and easy to love.
+                    </p>
+                    <div class="quote-box">
+                        “A fresh and graceful cake that feels like a little piece of sunshine.”
+                    </div>
+                    <a href="post-lemon.html" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Open Full Page</a>
+                </div>
+            </div>
+
+            <!-- Vanilla Story -->
+            <div class="story-card reveal-up">
+                <img src="img/homeback3.jpg" alt="Vanilla Elegance">
+                <div class="story-body">
+                    <span class="tag-pill">Vanilla</span>
+                    <span class="tag-pill">Classic Story</span>
+                    <h3 class="mb-3">Vanilla Elegance</h3>
+                    <p>
+                        Vanilla Elegance is the calm and graceful cake in the collection. It may look simple at first, but that is exactly where its beauty lives. It feels polished, timeless, and quietly confident.
+                    </p>
+                    <p>
+                        This cake tells a story of balance. It is soft, smooth, and classic, which makes it suitable for weddings, tea parties, and elegant celebrations. It reminds readers that simple flavours can still feel luxurious when they are made with care.
+                    </p>
+                    <div class="quote-box">
+                        “Soft, timeless, and beautifully calm — a classic cake with quiet elegance.”
+                    </div>
+                    <a href="post-vinillacake.html" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Open Full Page</a>
+                </div>
+            </div>
+
+            <!-- Berry Story -->
+            <div class="story-card reveal-up">
+                <img src="img/homeback2.jpg" alt="Berry Celebration Cake">
+                <div class="story-body">
+                    <span class="tag-pill">Berry</span>
+                    <span class="tag-pill">Celebration Story</span>
+                    <h3 class="mb-3">Berry Celebration Cake</h3>
+                    <p>
+                        Berry Celebration Cake feels joyful from the first moment you see it. Its berry colours and fresh, festive look give it the kind of energy that belongs at birthdays, parties, and happy family tables.
+                    </p>
+                    <p>
+                        This cake tells a cheerful story. It feels colourful, welcoming, and made for special moments. The fruit flavours keep it fresh, while the soft cream and decorative finish make it feel bright, beautiful, and ready to celebrate something meaningful.
+                    </p>
+                    <div class="quote-box">
+                        “A happy cake full of colour, freshness, and celebration.”
+                    </div>
+                    <a href="post-berrycake.html" class="btn btn-primary rounded-pill px-4 py-2 mt-2">Open Full Page</a>
+                </div>
+            </div>
+
+            <div class="text-center mt-5 reveal-up">
+                <a href="service.html" class="btn btn-primary rounded-pill px-5 py-3">Back to Our Posts</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="container-fluid footer pt-5 pb-4 mt-5">
+        <div class="container position-relative">
+            <div class="row g-5">
+                <div class="col-lg-4 reveal-up">
+                    <div class="newsletter-box">
+                        <h4>Cake Lovers Newsletter</h4>
+                        <p>Join our newsletter for sweet discoveries, elegant cake ideas, and fresh blog updates.</p>
+                        <div class="position-relative mt-4">
+                            <input class="form-control ps-4 pe-5" type="email" placeholder="Enter your email">
+                            <button type="button" class="btn btn-primary rounded-pill position-absolute top-50 end-0 translate-middle-y me-2 px-4">Subscribe</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-lg-2 reveal-up">
+                    <h4>Quick Links</h4>
+                    <a href="index.html"><i class="fas fa-angle-right me-2"></i>Home</a><br>
+                    <a href="about.html"><i class="fas fa-angle-right me-2"></i>About</a><br>
+                    <a href="service.html"><i class="fas fa-angle-right me-2"></i>Our Post</a><br>
+                    <a href="contact.html"><i class="fas fa-angle-right me-2"></i>Contact</a><br>
+                    <a href="sign-in.html"><i class="fas fa-angle-right me-2"></i>Sign In</a><br>
+                    <a href="sign-up.html"><i class="fas fa-angle-right me-2"></i>Sign Up</a>
+                </div>
+
+                <div class="col-md-6 col-lg-3 reveal-up">
+                    <h4>Other Review Pages</h4>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>Street Food Blog</a><br>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>Car Blog</a><br>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>Beautiful House Blog</a><br>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>Traditional Food Blog</a><br>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>Restaurant Blog</a><br>
+                    <a href="#"><i class="fas fa-angle-right me-2"></i>2D & 3D Art Blog</a>
+                </div>
+
+                <div class="col-lg-3 reveal-up">
+                    <h4>Contact Us</h4>
+                    <p class="mb-2"><i class="fas fa-map-marker-alt text-primary me-2"></i>No.37/Quarter, Yangon</p>
+                    <p class="mb-2"><i class="fas fa-envelope text-primary me-2"></i>akari16new@gmail.com</p>
+                    <p class="mb-4"><i class="fas fa-phone text-primary me-2"></i>(+95) 111 2222 333</p>
+
+                    <h4 class="mt-4">Connect With Us</h4>
+                    <div class="footer-social mt-3">
+                        <a href="https://www.facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+                        <a href="https://mm.linkedin.com" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Copyright -->
+    <div class="container-fluid copyright py-4">
+        <div class="container">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-center gap-3 text-center text-md-start">
+                <div>
+                    <span><i class="fas fa-copyright me-2"></i>Cake Heaven Blog, All rights reserved.</span>
+                </div>
+                <div>
+                    <span>Designed with sweet elegance and a modern blog style.</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Back To Top -->
+    <a href="#" class="btn btn-primary back-to-top" id="backToTop">
+        <i class="fa fa-arrow-up"></i>
+    </a>
+
+    <!-- JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        window.addEventListener("load", function () {
+            const spinner = document.getElementById("spinner");
+            spinner.classList.remove("show");
+        });
+
+        const backToTop = document.getElementById("backToTop");
+        window.addEventListener("scroll", function () {
+            if (window.scrollY > 300) {
+                backToTop.style.display = "inline-flex";
+            } else {
+                backToTop.style.display = "none";
+            }
+        });
+
+        const revealElements = document.querySelectorAll(".reveal-up");
+        const revealOnScroll = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("active");
+                }
+            });
+        }, {
+            threshold: 0.15
+        });
+
+        revealElements.forEach((el) => {
+            revealOnScroll.observe(el);
+        });
+    </script>
+</body>
+
+</html>
