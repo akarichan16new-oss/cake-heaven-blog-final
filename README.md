@@ -3,6 +3,8 @@
 Cake Heaven Blog is a responsive cake and dessert blog website.  
 It shares cake recipes, baking ideas, dessert inspiration, and bakery-style blog posts through a clean multi-page website design.
 
+**🌐 Live site:** https://akarichan16new-oss.github.io/cake-heaven-blog-final/
+
 ---
 
 ## ✨ Features
@@ -14,7 +16,8 @@ It shares cake recipes, baking ideas, dessert inspiration, and bakery-style blog
 - Cake category pages
 - Individual cake blog post pages
 - Sign in and sign up pages
-- CSS, SCSS, JavaScript, and image assets included
+- Custom CSS with Bootstrap 5, Google Fonts and icon libraries
+- Optimised images for fast loading
 - Clean folder structure for a static website
 
 ---
@@ -23,9 +26,10 @@ It shares cake recipes, baking ideas, dessert inspiration, and bakery-style blog
 
 - HTML5
 - CSS3
-- SCSS
 - JavaScript
-- Bootstrap / external libraries
+- Bootstrap 5 (via CDN)
+- Font Awesome & Bootstrap Icons
+- GitHub Pages (hosting)
 - Git and GitHub
 
 ---
@@ -36,10 +40,7 @@ It shares cake recipes, baking ideas, dessert inspiration, and bakery-style blog
 cake-heaven-blog/
 │
 ├── css/                   # Main CSS styles
-├── img/                   # Website images
-├── js/                    # JavaScript files
-├── lib/                   # External libraries/plugins
-├── scss/                  # SCSS source files
+├── img/                   # Website images and favicon
 │
 ├── about.html             # About page
 ├── classic-cakes.html     # Classic cakes category page
@@ -69,7 +70,11 @@ cake-heaven-blog/
 
 ## 🚀 How to View the Website
 
-### Option 1: Open directly
+### Option 1: Visit the live site
+
+https://akarichan16new-oss.github.io/cake-heaven-blog-final/
+
+### Option 2: Open directly
 
 Open this file in your browser:
 
@@ -77,7 +82,7 @@ Open this file in your browser:
 index.html
 ```
 
-### Option 2: Use VS Code Live Server
+### Option 3: Use VS Code Live Server
 
 1. Open the project in VS Code.
 2. Right-click `index.html`.
