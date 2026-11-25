@@ -115,7 +115,7 @@ It is suitable for showcasing dessert content, cake recipes, bakery ideas, and w
 
 ## 👩‍💻 Author
 
-Created by **Akari Chan**  
+Created by **Aye Nyein Thu**  
 GitHub: `akarichan16new-oss`
 
 ---
